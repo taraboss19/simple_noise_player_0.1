@@ -1,0 +1,161 @@
+# Import part. Import flowing modules:
+from kivy.app import App
+from kivy.uix.button import Button
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.floatlayout import FloatLayout
+from kivy.config import Config
+from kivy.uix.label import Label
+from kivy.uix.image import Image
+from kivy.core.audio import SoundLoader
+from kivy.uix.popup import Popup
+from kivy.uix.widget import Widget
+
+# load sound of noises:
+white_noise = SoundLoader.load('/home/taraboss/environments/f:/my_pyth/noiseplayer/White_noise.ogg.mp3')
+pink_noise = SoundLoader.load('/home/taraboss/environments/f:/my_pyth/noiseplayer/Pink_noise.ogg.mp3')
+brown_noise = SoundLoader.load('/home/taraboss/environments/f:/my_pyth/noiseplayer/Brown_noise.ogg.mp3')
+blue_noise = SoundLoader.load('/home/taraboss/environments/f:/my_pyth/noiseplayer/Blue_noise.ogg.mp3')
+purple_noise = SoundLoader.load('/home/taraboss/environments/f:/my_pyth/noiseplayer/Purple_noise.ogg.mp3')
+gray_noise = SoundLoader.load('/home/taraboss/environments/f:/my_pyth/noiseplayer/Gray_noise.ogg.mp3')
+green_noise = SoundLoader.load('/home/taraboss/environments/f:/my_pyth/noiseplayer/GreenNoise.ogg.mp3')
+
+# configurate window:
+Config.set('graphics', 'resizable', 0)
+Config.set('graphics', 'width', 690)
+Config.set('graphics', 'height', 870)
+
+# reserved place for popup:
+class NoisePic(Popup):
+    pass
+
+# start to construct noise_player_app:
+class NoisePlayerApp(App):
+
+    def build(self):
+        # build space for app:
+        synth_fl = FloatLayout()
+        # make background:
+        bg_img = Image(source = '/home/taraboss/environments/f:/my_pyth/noiseplayer/6318.jpg', allow_stretch = True, keep_ratio = False)
+        synth_fl.add_widget(bg_img)
+        # make ordered buttons:
+        synth_gl = GridLayout(cols = 1, rows = 7, padding = 19, spacing = 5,)
+        synth_gl.add_widget(Button (background_color = [1, 1, 1, 1], background_normal = "", on_press = self.white_noise_play))
+        synth_gl.add_widget(Button (background_color = [1, 0, 1, 1], background_normal = "", on_press = self.pink_noise_play))
+        synth_gl.add_widget(Button (background_color = [.459, .309, .2, 1], background_normal = "", on_press = self.brown_noise_play))
+        synth_gl.add_widget(Button (background_color = [0, 0, 1, 1], background_normal = "", on_press = self.blue_noise_play))
+        synth_gl.add_widget(Button (background_color = [.371, .1, .557, 1], background_normal = "", on_press = self.purple_noise_play))
+        synth_gl.add_widget(Button (background_color = [.3, .3, .3, 1], background_normal = "", on_press = self.gray_noise_play))
+        synth_gl.add_widget(Button (background_color = [0, 1, .2, 1], background_normal = "", on_press = self.green_noise_play))
+        # sum backround + buttons
+        synth_fl.add_widget(synth_gl)
+        # make labels for buttons:
+        synth_fl.add_widget(Label(text = "WHITE NOISE", font_size = 37, color = [0, 0, 0, 1], pos = (0, 360)))
+        synth_fl.add_widget(Label(text = "PINK NOISE", font_size = 37, color = [0, 0, 0, 1], pos = (0, 240)))
+        synth_fl.add_widget(Label(text = "BROWN NOISE", font_size = 37, color = [0, 0, 0, 1], pos = (0, 120)))
+        synth_fl.add_widget(Label(text = "BLUE NOISE", font_size = 37, color = [0, 0, 0, 1], pos = (0, 0)))
+        synth_fl.add_widget(Label(text = "PURPLE NOISE", font_size = 37, color = [0, 0, 0, 1], pos = (0, -120)))
+        synth_fl.add_widget(Label(text = "GRAY NOISE", font_size = 37, color = [0, 0, 0, 1], pos = (0, -240)))
+        synth_fl.add_widget(Label(text = "GREEN NOISE", font_size = 37, color = [0, 0, 0, 1], pos = (0, -360)))
+        return synth_fl
+
+    # make actions for "White Noise" button, when button on press:
+    def white_noise_play(self, instance):
+        white_noise.play()
+        white_noise.loop = True
+        content = Button(background_normal=('/home/taraboss/environments/f:/my_pyth/noiseplayer/White_noise_spectrum.png'))
+        content.add_widget(Label(text = "click to close", font_size = 55, color = [0, 0, 0, 1], pos = (300, 360)))
+        popup = NoisePic(title = "White Noise", title_size =37, title_align = "center", title_color = [1, 1, 1, 1], content = content, auto_dismiss = False)
+        content.bind(on_press = popup.dismiss, on_release = self.white_noise_stop)
+        popup.open()
+
+    # make actions for "White Noise" button, when batton on realease:
+    def white_noise_stop(self, instance):
+        white_noise.stop()
+
+    # make actions for "Pink Noise" button, when button on press:
+    def pink_noise_play(self, instance):
+        pink_noise.play()
+        pink_noise.loop = True
+        content = Button(background_normal=('/home/taraboss/environments/f:/my_pyth/noiseplayer/Pink_noise_spectrum.png'))
+        content.add_widget(Label(text = "click to close", font_size = 55, color = [0, 0, 0, 1], pos = (300, 360)))
+        popup = NoisePic(title = "Pink Noise", title_size =37, title_align = "center", title_color = [1, 0, 1, 1], content = content, auto_dismiss = False)
+        content.bind(on_press = popup.dismiss, on_release = self.pink_noise_stop)
+        popup.open()
+
+    # make actions for "Pink Noise" button, when batton on realease:
+    def pink_noise_stop(self, instance):
+        pink_noise.stop()
+
+    # make actions for "Brown Noise" button, when button on press:
+    def brown_noise_play(self, instance):
+        brown_noise.play()
+        brown_noise.loop = True
+        content = Button(background_normal=('/home/taraboss/environments/f:/my_pyth/noiseplayer/Brown_noise_spectrum.png'))
+        content.add_widget(Label(text = "click to close", font_size = 55, color = [0, 0, 0, 1], pos = (300, 360)))
+        popup = NoisePic(title = "Brown Noise", title_size =37, title_align = "center", title_color = [.459, .309, .2, 1], content = content, auto_dismiss = False)
+        content.bind(on_press = popup.dismiss, on_release = self.brown_noise_stop)
+        popup.open()
+
+    # make actions for "Brown Noise" button, when batton on realease:
+    def brown_noise_stop(self, instance):
+        brown_noise.stop()
+
+    # make actions for "Blue Noise" button, when button on press:
+    def blue_noise_play(self, instance):
+        blue_noise.play()
+        blue_noise.loop = True
+        content = Button(background_normal=('/home/taraboss/environments/f:/my_pyth/noiseplayer/Blue_noise_spectrum.png'))
+        content.add_widget(Label(text = "click to close", font_size = 55, color = [0, 0, 0, 1], pos = (300, 360)))
+        popup = NoisePic(title = "Blue Noise", title_size =37, title_align = "center", title_color = [0, 0, 1, 1], content = content, auto_dismiss = False)
+        content.bind(on_press = popup.dismiss, on_release = self.blue_noise_stop)
+        popup.open()
+
+    # make actions for "Blue Noise" button, when batton on realease:
+    def blue_noise_stop(self, instance):
+        blue_noise.stop()
+
+    # make actions for "Purple Noise" button, when button on press:
+    def purple_noise_play(self, instance):
+        purple_noise.play()
+        purple_noise.loop = True
+        content = Button(background_normal=('/home/taraboss/environments/f:/my_pyth/noiseplayer/Purple_noise_spectrum.png'))
+        content.add_widget(Label(text = "click to close", font_size = 55, color = [0, 0, 0, 1], pos = (300, 360)))
+        popup = NoisePic(title = "PURPLE NOISE", title_size =37, title_align = "center", title_color = [.371, .1, .557, 1], content = content, auto_dismiss = False)
+        content.bind(on_press = popup.dismiss, on_release = self.purple_noise_stop)
+        popup.open()
+
+    # make actions for "Purple Noise" button, when batton on realease:
+    def purple_noise_stop(self, instance):
+        purple_noise.stop()
+
+    # make actions for "Gray Noise" button, when button on press:
+    def gray_noise_play(self, instance):
+        gray_noise.play()
+        gray_noise.loop = True
+        content = Button(background_normal=('/home/taraboss/environments/f:/my_pyth/noiseplayer/Gray_noise_spectrum.png'))
+        content.add_widget(Label(text = "click to close", font_size = 55, color = [0, 0, 0, 1], pos = (300, 360)))
+        popup = NoisePic(title = "GRAY NOISE", title_size =37, title_align = "center", title_color = [.3, .3, .3, 1], content = content, auto_dismiss = False)
+        content.bind(on_press = popup.dismiss, on_release = self.gray_noise_stop)
+        popup.open()
+
+    # make actions for "Gray Noise" button, when batton on realease:
+    def gray_noise_stop(self, instance):
+        gray_noise.stop()
+
+    # make actions for "Green Noise" button, when button on press:
+    def green_noise_play(self, instance):
+        green_noise.play()
+        green_noise.loop = True
+        content = Button(background_normal=('/home/taraboss/environments/f:/my_pyth/noiseplayer/Zelennyiy-shum.jpg'))
+        content.add_widget(Label(text = "click to close", font_size = 55, color = [0, 0, 0, 1], pos = (300, 360)))
+        popup = NoisePic(title = "GREEN NOISE", title_size =37, title_align = "center", title_color = [0, 1, .2, 1], content = content, auto_dismiss = False)
+        content.bind(on_press = popup.dismiss, on_release = self.green_noise_stop)
+        popup.open()
+
+    # make actions for "Gray Noise" button, when batton on realease:
+    def green_noise_stop(self, instance):
+        green_noise.stop()
+
+# star full app:
+if __name__ == "__main__":
+    NoisePlayerApp().run()
